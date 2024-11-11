@@ -5,6 +5,8 @@
 #include <vector>
 
 #define endl '\n'
+#define PB push_back
+#define MP make_pair
 
 using namespace std;
 
@@ -13,6 +15,25 @@ void print_vec(vector<int> arr){
         cout << val << ' ';
     }
     cout << endl;
+}
+
+void prty_vec(vector<int> arr){
+    int curr_val = arr[0];
+    vector<pair <int, int>> sorted_arr;
+    int count = 1;
+    for(int val: arr){
+        if(curr_val != val){
+            curr_val = val;
+            sorted_arr.PB(MP(curr_val, count));
+            count = 1;
+        }
+        else{
+            ++count;
+        }
+    }
+    for(auto it = sorted_arr.begin(); it != sorted_arr.end(); ++it){
+        cout << "Val: " << it->first << " Frequency: " << it->second << endl;
+    }
 }
 
 vector<int> merge_sort(vector<int> arr){
@@ -48,6 +69,22 @@ vector<int> merge_sort(vector<int> arr){
     return arr1_2;
 }
 
+vector<int> bubble_sort(vector<int> arr){
+    bool flag = true;
+    while(flag){
+        flag = false;
+        for(size_t i = 0; i < arr.size() - 1; ++i){
+            if(arr[i] > arr[i + 1]){
+                int tmp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = tmp;
+                flag = true;
+            }
+        }
+    }
+    return arr;
+}
+
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
@@ -73,8 +110,9 @@ int main(){
     }
     inputFile.close();
 
-    arr = merge_sort(arr);
-    print_vec(arr);
+    arr = bubble_sort(arr);
+    prty_vec(arr);
+    // print_vec(arr);
 
     cout << "Ended\n";
     return 0;
