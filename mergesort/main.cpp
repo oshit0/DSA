@@ -10,6 +10,27 @@
 
 using namespace std;
 
+void initialize_arr(vector<int> &arr){
+    ifstream inputFile("../data/array_input.txt");
+    string line;
+
+    if(!inputFile) {
+        cerr << "Failed to open file!" << endl;
+        return;
+    }
+
+    while(getline(inputFile, line)) {
+        stringstream ss(line);
+        string temp;
+        while (getline(ss, temp, ',')) {
+            if (!temp.empty()) {
+                arr.PB(std::stoi(temp));
+            }
+        }
+    }
+    inputFile.close();
+}
+
 void print_vec(vector<int> arr){
     for(int val: arr){
         cout << val << ' ';
@@ -90,29 +111,12 @@ int main(){
     cin.tie(0);
     // vector<int> arr = {73, 42, 91, 56, 18, 64, 39, 27, 85, 12};
     // vector<int> arr = {38, 27, 43, 10};
-    ifstream inputFile("array_input.txt");
     vector<int> arr;
-    string line;
+    initialize_arr(arr);
 
-    if(!inputFile) {
-        cerr << "Failed to open file!" << endl;
-        return 1;
-    }
-
-    while(getline(inputFile, line)) {
-        stringstream ss(line);
-        string temp;
-        while (getline(ss, temp, ',')) {
-            if (!temp.empty()) {
-                arr.push_back(std::stoi(temp));
-            }
-        }
-    }
-    inputFile.close();
-
-    arr = bubble_sort(arr);
+    arr = merge_sort(arr);
+    // arr = bubble_sort(arr);
     prty_vec(arr);
-    // print_vec(arr);
 
     cout << "Ended\n";
     return 0;
